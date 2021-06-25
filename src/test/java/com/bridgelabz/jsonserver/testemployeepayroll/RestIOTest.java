@@ -85,6 +85,20 @@ public class RestIOTest {
         });
         long entries = employeePayroll.countEntries();
         Assert.assertEquals(4,entries);
-        
     }
-}
+    @Test
+    public void givenEmployeeToDelete_WhenDeleted_ShouldMatch200ResponseAndCount() {
+        EmployeeDetails[] employeeDetails = getEmployeeList();
+        EmployeePayroll employeePayroll = new EmployeePayroll(Arrays.asList(employeeDetails));
+        EmployeeDetails employeeDetails1 = employeePayroll.getEmployee("Siri");
+        RequestSpecification requestSpecification = RestAssured.given();
+        requestSpecification.header("Content-Type", "application/json");
+        Response response = requestSpecification.delete("/employee_payroll/" + employeeDetails1.id);
+        int statusCode = requestSpecification.get().statusCode();
+        Assert.assertEquals(200, statusCode);
+
+        employeePayroll.deleteEmployee(employeeDetails1.name);
+        long entries = employeePayroll.countEntries();
+        Assert.assertEquals(1, entries);
+    }
+    }

@@ -22,11 +22,13 @@ public class EmployeePayroll {
         if(employeeDetails != null)
             employeeDetails.salary = salary;
     }
-
     public EmployeeDetails getEmployee(String name) {
         return this.employeeDetailsList.stream()
                 .filter(employeeDetails -> employeeDetails.name.equals(name))
                 .findFirst()
                 .orElse(null);
+    }
+    public void deleteEmployee(String name){
+        this.employeeDetailsList.remove(this.getEmployee(name));
     }
 }
