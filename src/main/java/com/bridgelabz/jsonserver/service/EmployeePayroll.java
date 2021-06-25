@@ -17,4 +17,16 @@ public class EmployeePayroll {
     public void addEmployee(EmployeeDetails employeeDetails){
         this.employeeDetailsList.add(employeeDetails);
     }
+    public void updateEmployee(String name, int salary) {
+        EmployeeDetails employeeDetails = this.getEmployee(name);
+        if(employeeDetails != null)
+            employeeDetails.salary = salary;
+    }
+
+    public EmployeeDetails getEmployee(String name) {
+        return this.employeeDetailsList.stream()
+                .filter(employeeDetails -> employeeDetails.name.equals(name))
+                .findFirst()
+                .orElse(null);
+    }
 }

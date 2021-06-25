@@ -53,4 +53,18 @@ public class RestIOTest {
         Assert.assertEquals(3, entries);
     }
 
+    @Test
+    public void givenNewSalary_WhenUpdated_ShouldMatch200Response() {
+        EmployeeDetails[] employeeDetails = getEmployeeList();
+        EmployeePayroll employeePayroll = new EmployeePayroll(Arrays.asList(employeeDetails));
+        employeePayroll.updateEmployee("Mark Zuckerberg",123654);
+        EmployeeDetails employeeDetails1 = employeePayroll.getEmployee("Mark Zuckerberg");
+        String empJson = new Gson().toJson(employeeDetails1);
+        RequestSpecification request = RestAssured.given();
+        request.header("Content-Type", "application/json");
+        request.body(empJson);
+        Response response = request.put("/employee_payroll/" + employeeDetails1.id);
+        int statusCode = response.getStatusCode();
+        Assert.assertEquals(200,statusCode);
+    }
 }
