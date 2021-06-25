@@ -67,4 +67,24 @@ public class RestIOTest {
         int statusCode = response.getStatusCode();
         Assert.assertEquals(200,statusCode);
     }
+    @Test
+    public void givenMultipleEmployee_WhenAdded_ShouldMatch201ResponseAndCount() {
+        EmployeeDetails[] employeeDetails = getEmployeeList();
+        EmployeePayroll employeePayroll = new EmployeePayroll(Arrays.asList(employeeDetails));
+        EmployeeDetails[] employeeDetails1 = {
+                new EmployeeDetails(5,"Apple","M",500000.00, LocalDate.now()),
+                new EmployeeDetails(6,"Google","F",6000.00, LocalDate.now()),
+                new EmployeeDetails(7,"Siri","M",7000.00, LocalDate.now())
+        };
+        Arrays.stream(employeeDetails1).forEach(employeeDetails2 -> {
+            Response response = addEmployeeToJsonServer(employeeDetails2);
+            int statusCode = response.getStatusCode();
+            Assert.assertEquals(201,statusCode);
+            employeeDetails2 = new Gson().fromJson(response.asString(), EmployeeDetails.class);
+            employeePayroll.addEmployee(employeeDetails2);
+        });
+        long entries = employeePayroll.countEntries();
+        Assert.assertEquals(4,entries);
+        
+    }
 }
