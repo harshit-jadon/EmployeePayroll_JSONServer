@@ -11,8 +11,10 @@ public class EmployeePayroll {
     public EmployeePayroll(List<EmployeeDetails> employeeDetailsList) {
         this.employeeDetailsList = new ArrayList<>(employeeDetailsList);
     }
-
     public long countEntries() {
         return this.employeeDetailsList.size();
+    }
+    public void addEmployee(EmployeeDetails employeeDetails){
+        this.employeeDetailsList.add(employeeDetails);
     }
 }

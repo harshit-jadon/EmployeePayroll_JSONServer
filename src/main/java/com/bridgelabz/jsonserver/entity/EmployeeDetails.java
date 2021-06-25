@@ -1,15 +1,19 @@
 package com.bridgelabz.jsonserver.entity;
 
+import java.time.LocalDate;
+
 public class EmployeeDetails {
     public int id;
     public String name;
-    public double salary;
     String gender;
+    public double salary;
+    LocalDate startDate;
 
-    public EmployeeDetails(int id, String name, double salary, String gender) {
+    public EmployeeDetails(int id, String name, String gender, double salary, LocalDate startDate) {
         this.id = id;
         this.name = name;
-        this.salary = salary;
         this.gender = gender;
+        this.salary = salary;
+        this.startDate = startDate;
     }
 }
